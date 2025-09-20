@@ -1,12 +1,18 @@
-import card1 from '../assets/images/card1.png'
+
+import card1 from '../../assets/images/card1.png'
 import { LuTrendingUpDown } from 'react-icons/lu'
+import ThreeDBackground from '../ThreeDBackground';
 
 const AuthLayout = ({ children }) => {
   return (
     <div className="flex">
-      <div className="w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12">
-        <h2 className="text-lg font-medium text-black">Expense Tracker</h2>
-        {children}
+      <div className="relative w-screen h-screen md:w-[60vw] flex flex-col items-center justify-center overflow-hidden">
+        {/* 3D Background */}
+        <div className="absolute inset-0 -z-10 hidden md:block">
+          <ThreeDBackground />
+        </div>
+  <h2 className="text-lg font-medium text-black absolute top-8 left-12 z-20">Expense Tracker</h2>
+  <div className="relative z-10 w-full flex flex-col items-center justify-center">{children}</div>
       </div>
 
       <div className='hidden md:block w-[40vw] h-screen bg-violet-50 bg-auth-bg bg-cover bg-n0-repeat bg-center overflow-hidden p-8 relative'>
