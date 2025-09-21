@@ -1,5 +1,6 @@
 
 import card1 from '../../assets/images/card1.png'
+
 import { LuTrendingUpDown } from 'react-icons/lu'
 import ThreeDBackground from '../ThreeDBackground';
 
@@ -11,7 +12,20 @@ const AuthLayout = ({ children }) => {
         <div className="absolute inset-0 -z-10 hidden md:block">
           <ThreeDBackground />
         </div>
-  <h2 className="text-lg font-medium text-black absolute top-8 left-12 z-20">Expense Tracker</h2>
+        <div className="flex items-center gap-3 absolute top-8 left-12 z-20">
+          {/* SVG Wallet Icon */}
+          <span className="inline-block w-9 h-9">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+              <rect x="3" y="8" width="26" height="16" rx="4" fill="#875cf5"/>
+              <rect x="5" y="10" width="22" height="12" rx="3" fill="#fff"/>
+              <rect x="18" y="14" width="7" height="4" rx="2" fill="#a855f7"/>
+              <rect x="7" y="12" width="10" height="8" rx="2" fill="#ede9fe"/>
+              <circle cx="21.5" cy="16" r="1.2" fill="#fff"/>
+              <rect x="3" y="8" width="26" height="16" rx="4" stroke="#7c3aed" strokeWidth="1.5"/>
+            </svg>
+          </span>
+          <h2 className="text-lg font-medium text-black">Expense Tracker</h2>
+        </div>
   <div className="relative z-10 w-full flex flex-col items-center justify-center">{children}</div>
       </div>
 
