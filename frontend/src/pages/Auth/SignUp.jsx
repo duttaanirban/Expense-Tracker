@@ -3,9 +3,11 @@ import AuthLayout from "../../components/layouts/auth.layout.jsx";
 import { Link } from "react-router-dom";
 import Input from "../../components/inputs/Input.jsx";
 import { validateEmail } from "../../utils/helper.js";
+import ProfilePicSelector from "../../components/inputs/ProfilePicSelector.jsx";
 
 
 const SignUp = () => {
+  const [profilePic, setProfilePic] = useState(null);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,11 +46,13 @@ const SignUp = () => {
 
   return (
     <AuthLayout>
-      <div className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center mt-10">
-        <div className="bg-white/80 shadow-lg rounded-xl px-8 py-10 max-w-xl w-full mx-auto">
-          <h3 className="text-2xl font-bold text-black mb-1">Create an Account</h3>
-          <p className="text-slate-700 mb-8">Join us today by entering your details here.</p>
+      <div className="lg:w-[70%] flex flex-col justify-center mt-20">
+        <div className="bg-white/80 shadow-lg rounded-xl px-5 py-6 max-w-xl w-full mx-auto">
+          <h3 className="text-xl font-bold text-black mb-1">Create an Account</h3>
+          <p className="text-slate-700 mb-5">Join us today by entering your details here.</p>
           <form onSubmit={handleSignUp}>
+
+            <ProfilePicSelector image={profilePic} setImage={setProfilePic} />
             <Input
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
