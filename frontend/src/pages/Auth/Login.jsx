@@ -2,6 +2,7 @@ import { useState } from "react";
 import AuthLayout from "../../components/layouts/auth.layout.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/inputs/Input.jsx";
+import { validateEmail } from "../../utils/helper.js";
 
 const Login = () => {
 
@@ -14,8 +15,22 @@ const Login = () => {
   //login handler
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(null);
-    // Add login logic here
+    
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    if (!password) {
+      setError('Please enter your password.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+    setError("");
   }
 
   return (
@@ -49,7 +64,7 @@ const Login = () => {
           </form>
           <div className="text-sm text-center mt-2">
             Don't have an account?{' '}
-            <a href="/signup" className="text-primary font-medium hover:underline">Sign Up</a>
+            <Link to="/signup" className="text-primary font-medium hover:underline">Sign Up</Link>
           </div>
         </div>
       </div>
