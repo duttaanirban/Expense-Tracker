@@ -1,4 +1,4 @@
-
+const User = require('../models/User');
 const express = require('express');
 
 const {
@@ -11,6 +11,6 @@ const router = express.Router();
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/getUser', protect, getUserInfo);
+router.get('/getUser', getUserInfo);
 
 module.exports = router;
