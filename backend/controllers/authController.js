@@ -1,12 +1,23 @@
+const jwt = require('jsonwebtoken');
 
-exports.registerUser = (req, res) => {
-  res.send('Register endpoint');
+//generate JWT
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+  });
 };
 
-exports.loginUser = (req, res) => {
-  res.send('Login endpoint');
+//register user
+exports.registerUser = async (req, res) => {
+  const { name, email, password } = req.body;
 };
 
-exports.getUserInfo = (req, res) => {
-  res.send('User info endpoint');
+//login user
+exports.loginUser = async (req, res) => {
+  const { email, password } = req.body;
+};
+
+//get user info
+exports.getUserInfo = async (req, res) => {
+  res.status(200).json(req.user);
 };
