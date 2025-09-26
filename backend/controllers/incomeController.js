@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const XLSX = require('xlsx');
 const Income = require('../models/Income');
 
 
