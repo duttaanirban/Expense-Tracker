@@ -7,11 +7,15 @@ const incomeSchema = new Schema({
         ref: 'User',
         required: true
     },
-    icon: { 
+    icon: {
         type: String,
     },
     source: {
         type: String,
+        required: true
+    },
+    amount: {
+        type: Number,
         required: true
     },
     date: {
