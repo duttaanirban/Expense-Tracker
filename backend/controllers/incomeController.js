@@ -40,7 +40,13 @@ exports.getAllIncomes = async (req, res) => {
 };
 
 exports.deleteIncome = async (req, res) => {
-
+    try {
+        await Income.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
+        res.status(200).json({ message: "Income deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting income:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 };
 
 exports.downloadIncomeExcel = async (req, res) => {
