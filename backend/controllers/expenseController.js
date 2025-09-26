@@ -1,20 +1,21 @@
 const XLSX = require('xlsx');
-const expense = require('../models/Expense');
+const Expense = require('../models/Expense');
 
 
 //addExpense
 exports.addExpense = async (req, res) => {
     const userId = req.user.id;
     try {
-        const { description, amount, date } = req.body;
+        const { icon, category, amount, date } = req.body;
 
-        if (!description || !amount || !date) {
+        if (!category || !amount || !date) {
             return res.status(400).json({ message: "Please provide all required fields" });
         }
 
-        const newExpense = new expense({
+        const newExpense = new Expense({
             userId,
-            description,
+            icon,
+            category,
             amount,
             date
         });
@@ -30,7 +31,7 @@ exports.addExpense = async (req, res) => {
 exports.getAllExpenses = async (req, res) => {
     const userId = req.user.id;
     try {
-        const expenses = await expense.find({ userId }).sort({ date: -1 });
+        const expenses = await Expense.find({ userId }).sort({ date: -1 });
         res.status(200).json(expenses);
     } catch (error) {
         console.error("Error fetching expenses:", error);
@@ -40,7 +41,7 @@ exports.getAllExpenses = async (req, res) => {
 
 exports.deleteExpense = async (req, res) => {
     try {
-        await expense.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
+        await Expense.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
         res.status(200).json({ message: "Expense deleted successfully" });
     } catch (error) {
         console.error("Error deleting expense:", error);
@@ -51,11 +52,12 @@ exports.deleteExpense = async (req, res) => {
 exports.downloadExpenseExcel = async (req, res) => {
     const userId = req.user.id;
     try {
-        const expenses = await expense.find({ userId }).sort({ date: -1 });
+        const expenses = await Expense.find({ userId }).sort({ date: -1 });
 
         // prepare data for excel
         const data = expenses.map(item => ({
-            Description: item.description,
+            Icon: item.icon,
+            Category: item.category,
             Amount: item.amount,
             Date: item.date,
         }));
