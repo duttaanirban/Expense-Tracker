@@ -9,9 +9,11 @@ import SignUp from './pages/auth/SignUp.jsx';
 import Income from './pages/Dashboard/Income.jsx';
 import Home from './pages/Dashboard/Home.jsx';
 import Expense from './pages/Dashboard/Expense.jsx';
+import { UserProvider } from './context/userContext.jsx';
 
 const App = () => {
   return (
+    <UserProvider>
     <div>
       <Router>
         <Routes>
@@ -24,6 +26,7 @@ const App = () => {
         </Routes>
       </Router>
     </div>
+    </UserProvider>
   )
 }
 

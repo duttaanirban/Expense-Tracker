@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AuthLayout from "../../components/layouts/auth.layout.jsx";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Input from "../../components/inputs/Input.jsx";
 import { validateEmail } from "../../utils/helper.js";
+import axiosInstance from "../../utils/axios.js";
+import { API_PATHS } from "../../utils/apiPaths.js";
+import { UserContext } from "../../context/userContext.jsx";
 
 const Login = () => {
 
@@ -10,7 +13,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   
-  //const navigate = useNavigate();
+  const {updateUser} = useContext(UserContext);
+  const navigate = useNavigate();
 
   //login handler
   const handleLogin = async (e) => {
@@ -31,8 +35,25 @@ const Login = () => {
       return;
     }
     setError("");
-    
-  }
+
+    //LOGIN API CALL
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, { email, password });
+      
+      const { token, user } = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(user);
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
+    }
+  };
 
   return (
     <AuthLayout>
