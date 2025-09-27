@@ -41,7 +41,7 @@ exports.getAllExpenses = async (req, res) => {
 
 exports.deleteExpense = async (req, res) => {
     try {
-        await Expense.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
+        await Expense.findByIdAndDelete(req.params.id);
         res.status(200).json({ message: "Expense deleted successfully" });
     } catch (error) {
         console.error("Error deleting expense:", error);
@@ -56,7 +56,6 @@ exports.downloadExpenseExcel = async (req, res) => {
 
         // prepare data for excel
         const data = expenses.map(item => ({
-            Icon: item.icon,
             Category: item.category,
             Amount: item.amount,
             Date: item.date,
