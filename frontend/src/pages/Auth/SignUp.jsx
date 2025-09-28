@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AuthLayout from "../../components/layouts/auth.layout.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/inputs/Input.jsx";
 import { validateEmail } from "../../utils/helper.js";
 import ProfilePicSelector from "../../components/inputs/ProfilePicSelector.jsx";
+import axiosInstance from "../../utils/axios.js";
+import { API_PATHS } from "../../utils/apiPaths.js";
+import { UserContext } from "../../context/userContext.jsx";
+import uploadImage from "../../utils/uploadImage.js";
 
 
 const SignUp = () => {
@@ -14,11 +18,14 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
 
-  //const navigate = useNavigate();
+  const {updateUser} = useContext(UserContext);
+  const navigate = useNavigate();
 
   //signup handler
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    let profileImageUrl = "";
 
     if (!fullName.trim()) {
       setError('Please enter your full name.');
@@ -41,7 +48,30 @@ const SignUp = () => {
       return;
     }
     setError("");
-    // Add signup logic here
+    
+    //SIGNUP API CALL
+    try {
+      //upload image if exists
+      if (profilePic) {
+        const imageUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imageUploadRes.imageUrl;
+      }
+
+  const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, { fullName, email, password, profileImageUrl });
+
+      const { token, user} = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(user);
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
+    }
   }
 
   return (

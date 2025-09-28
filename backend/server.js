@@ -12,16 +12,16 @@ const dashBoardRoutes = require('./routes/dashBoardRoutes');
 const app = express();
 
 
+
 // Middleware
-app.use(cors(
-    {
-        origin: process.env.CLIENT_URL || "*",
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-    }
-));
+app.use(cors({
+    origin: "http://localhost:5173" || "*",
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 app.use(express.json());
+
 
 connectDB();
 

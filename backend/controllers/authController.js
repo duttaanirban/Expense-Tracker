@@ -10,20 +10,20 @@ const generateToken = (id) => {
 
 //register user
 exports.registerUser = async (req, res) => {
-  const { fullName, email, password, profilePic } = req.body;
-
-  if (!fullName || !email || !password) {
-    return res.status(400).json({ message: 'Please fill all required fields' });
-  }
-  
   try {
+    const { fullName, email, password, profileImageUrl } = req.body;
+
+    if (!fullName || !email || !password) {
+      return res.status(400).json({ message: 'Please fill all required fields' });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
     //create user
-    const user = await User.create({ fullName, email, password, profilePic });
+    const user = await User.create({ fullName, email, password, profileImageUrl });
     const token = generateToken(user._id);
     res.status(201).json({
       id: user._id,
