@@ -14,3 +14,8 @@ export const getInitials = (name) => {
   }
   return initials.toUpperCase();
 };
+
+export const addThousandsSeparator = (number) => {
+  if (isNaN(number)) return number;
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
