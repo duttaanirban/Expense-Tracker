@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import { API_PATHS } from "../utils/apiPaths";
 
-export const useUserAuth = () => {
+const useUserAuth = () => {
     const {user, updateUser, clearUser} = useContext(UserContext);
     const navigate = useNavigate();
 
@@ -36,3 +36,5 @@ export const useUserAuth = () => {
         };
     }, [user, updateUser, clearUser, navigate]);
 };
+
+export default useUserAuth;
