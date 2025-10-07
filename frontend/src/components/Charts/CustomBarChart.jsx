@@ -9,7 +9,6 @@ import {
     ResponsiveContainer,
     Cell
 } from 'recharts';
-import CustomTooltip from './CustomTooltip';
 
 const CustomBarChart = ({ data }) => {
 
