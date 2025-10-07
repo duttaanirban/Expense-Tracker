@@ -19,3 +19,11 @@ export const addThousandsSeparator = (number) => {
   if (isNaN(number)) return number;
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+export const prepareExpenseBarChartData = (data = []) => {
+  const chartData = data.map((item) => ({
+    category: item?.category,
+    amount: item?.amount || 0,
+  }));
+  return chartData;
+};

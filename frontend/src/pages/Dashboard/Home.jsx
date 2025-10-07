@@ -11,6 +11,7 @@ import { addThousandsSeparator } from '../../utils/helper.js';
 import RecentTransactions from '../../components/Dashboard/RecentTransactions.jsx';
 import FinanceOverview from '../../components/Dashboard/FinanceOverview.jsx';
 import ExpenseTransactions from '../../components/Dashboard/ExpenseTransactions.jsx';
+import Last30DaysExpense from '../../components/Dashboard/Last30DaysExpense.jsx';
 
 
 
@@ -82,6 +83,10 @@ const Home = () => {
           <ExpenseTransactions
             transactionsData={dashboardData?.last30daysExpenseTransactions?.transactions}
             onSeeMore={() => navigate("/expense")}
+          />
+
+          <Last30DaysExpense
+            data={dashboardData?.last30DaysExpenseTransactions?.transactions || []}
           />
         </div>
       </div>
