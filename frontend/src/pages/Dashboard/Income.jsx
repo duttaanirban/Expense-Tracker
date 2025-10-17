@@ -3,6 +3,7 @@ import DashboardLayout from "../../components/layouts/DashboardLayout"
 import IncomeOverview from "../../components/Income/IncomeOverview";
 import axiosInstance from "../../utils/axios";
 import { API_PATHS } from "../../utils/apiPaths";
+import Modal from "../../components/Modal";
 
 
 const Income = () => {
@@ -11,7 +12,7 @@ const Income = () => {
   const [loading, setLoading] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState({show: false, data: null});
   
-  const [OpenAddIncomeModal, setOpenAddIncomeModal] = useState(false);
+  const [OpenAddIncomeModal, setOpenAddIncomeModal] = useState(true);
   
   //getAllIncomeDetails
   const fetchIncomeData = async () => {
@@ -48,7 +49,7 @@ const Income = () => {
     fetchIncomeData();
 
     return () => {
-      
+
     }
   }, []);
 
@@ -63,6 +64,16 @@ const Income = () => {
             />
           </div>
         </div>
+
+        <Modal
+          isOpen={OpenAddIncomeModal}
+          onClose={() => setOpenAddIncomeModal(false)}
+          title="Add New Income"
+        >
+          <div>
+            Add Income Form
+          </div>
+        </Modal>
       </div>
     </DashboardLayout>
   )
