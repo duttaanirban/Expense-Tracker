@@ -5,7 +5,8 @@ import axiosInstance from "../../utils/axios";
 import { API_PATHS } from "../../utils/apiPaths";
 import Modal from "../../components/Modal";
 import AddIncomeForm from "../../components/Income/AddIncomeForm";
-
+import { toast } from "react-hot-toast";
+import IncomeList from "../../components/Income/IncomeList";
 
 const Income = () => {
 
@@ -36,22 +37,51 @@ const Income = () => {
   };
 
   //handleAddIncome
-  const handleAddIncome = () => {};
+  const handleAddIncome = async (income) => {
+    const {source, amount, date, icon} = income;
 
+    //simple validation
+    if (!source.trim()) {
+      toast.error("Please enter a valid income source.");
+      return;
+    }
+    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+      toast.error("Please enter a valid amount greater than zero.");
+      return;
+    }
+    if (!date) {
+      toast.error("Please select a valid date.");
+      return;
+    }
+
+    try {
+      await axiosInstance.post(`${API_PATHS.INCOME.ADD_INCOME}`, {
+        source,
+        amount,
+        date,
+        icon,
+      });
+
+      setOpenAddIncomeModal(false);
+      toast.success("Income added successfully!");
+      fetchIncomeData();
+    } catch (error) {
+      console.error("Error adding income:", error);
+      toast.error("Failed to add income. Please try again.");
+    }
+  };
 
   //handleDeleteIncome
-  const handleDeleteIncome = () => {};
+  const handleDeleteIncome = async (id) => {
 
 
   //handleDownloadIncome
-  const handleDownloadIncome = () => {};
+  const handleDownloadIncome = async () => {};
 
   useEffect(() => {
     fetchIncomeData();
 
-    return () => {
-
-    }
+    return () => {};
   }, []);
 
   return (
@@ -64,6 +94,14 @@ const Income = () => {
               onAddIncome={() => setOpenAddIncomeModal(true)}
             />
           </div>
+
+          <IncomeList
+            transactions={incomeData}
+            onDelete={(id) => {
+              setOpenDeleteAlert({show: true, data: id});
+            }}
+            onDownload={handleDownloadIncome}
+          />
         </div>
 
         <Modal
@@ -78,6 +116,7 @@ const Income = () => {
       </div>
     </DashboardLayout>
   )
+}
 }
 
 export default Income
