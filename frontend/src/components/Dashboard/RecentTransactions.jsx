@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { LuArrowRight } from 'react-icons/lu'
-import TransactioninfoCard from '../Cards/TransactioninfoCard.jsx'
+import TransactionInfoCard from '../Cards/TransactionInfoCard.jsx'
 
 const RecentTransactions = ({ transactions, onSeeMore }) => {
   return (
@@ -18,7 +18,7 @@ const RecentTransactions = ({ transactions, onSeeMore }) => {
 
       <div className='mt-6'>
           {transactions?.map((item) => (
-            <TransactioninfoCard
+            <TransactionInfoCard
               key={item._id}
               title={item.type == 'expense' ? item.category : item.source}
               icon={item.icon}

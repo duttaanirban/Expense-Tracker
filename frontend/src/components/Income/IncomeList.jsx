@@ -1,6 +1,6 @@
 import moment from "moment"
 import { LuDownload } from "react-icons/lu"
-import TransactionInfoCard from "../Cards/TransactioninfoCard"
+import TransactionInfoCard from "../Cards/TransactionInfoCard"
 
 const IncomeList = ({transactions, onDelete, onDownload}) => {
   return (
