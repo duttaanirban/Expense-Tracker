@@ -6,7 +6,7 @@ const path = require('path');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const incomeRoutes = require('./routes/incomeRoutes');
-const expenseRoutes = require('./routes/expenseROutes');
+const expenseRoutes = require('./routes/expenseRoutes');
 const dashBoardRoutes = require('./routes/dashBoardRoutes');
 
 const app = express();
