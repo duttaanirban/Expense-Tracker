@@ -74,7 +74,17 @@ const Income = () => {
 
   //handleDeleteIncome
   const handleDeleteIncome = async (id) => {
+    try {
+      await axiosInstance.delete(API_PATHS.INCOME.DELETE_INCOME(id));
 
+      setOpenDeleteAlert({show: false, data: null});
+      toast.success("Income deleted successfully!");
+      fetchIncomeData();
+    } catch (error) {
+      console.error("Error deleting income:", error);
+      toast.error("Failed to delete income. Please try again.");
+    }
+  };
 
   //handleDownloadIncome
   const handleDownloadIncome = async () => {};
@@ -122,13 +132,12 @@ const Income = () => {
         >
           <DeleteAlert
             content="Are you sure you want to delete this income entry? This action cannot be undone."
-            onDelete={() => deleteIncome(openDeleteAlert.data)}
+            onDelete={() => handleDeleteIncome(openDeleteAlert.data)}
           />
         </Modal>
       </div>
     </DashboardLayout>
   )
-}
 }
 
 export default Income
