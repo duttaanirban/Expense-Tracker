@@ -20,10 +20,13 @@ const CustomBarChart = ({ data }) => {
         if (active && payload && payload.length) {
             return (
                 <div className='bg-white shadow-md rounded-lg p-2 border border-gray-300'>
-                    <p className='text-xs font-semibold text-purple-800'>{payload[0].payload.category}</p>
-                    <p className='text-sm text-gray-600'>
-                        Amount: <span className='text-sm font-medium text-gray-900'>${payload[0].payload.amount}</span>
+                    <p className='text-xs font-semibold text-purple-800'>
+                        {payload[0].payload.name}
                     </p>
+                    <p className='text-sm text-gray-600'>
+                        Price: <span className='text-sm font-medium text-gray-900'>${payload[0].payload.amount}</span>
+                    </p>
+                    <p className='text-xs text-gray-500'>Date: {payload[0].payload.date}</p>
                 </div>
             );
         }
@@ -37,7 +40,7 @@ const CustomBarChart = ({ data }) => {
             <BarChart data={data}>
                 <CartesianGrid strokeDasharray="none" />
 
-                <XAxis dataKey="month" tick={{fontSize: 12, fill: "#555"}} stroke='none' />
+                <XAxis dataKey="name" tick={{fontSize: 12, fill: "#555"}} stroke='none' />
                 <YAxis tick={{fontSize: 12, fill: "#555"}} stroke='none' />
 
                 <Tooltip content={CustomTooltip} />

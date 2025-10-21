@@ -24,20 +24,23 @@ export const addThousandsSeparator = (number) => {
 };
 
 export const prepareExpenseBarChartData = (data = []) => {
-  const chartData = data.map((item) => ({
-    category: item?.category,
-    amount: item?.amount || 0,
+  // Each bar is a separate expense entry
+  const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const chartData = sortedData.map((item) => ({
+    name: item?.category || "Expense",
+    amount: Number(item?.amount || 0),
+    date: moment(item?.date).format("DD MMM YYYY"),
   }));
   return chartData;
 };
 
 export const prepareIncomeBarChartData = (data = []) => {
+  // Each bar is a separate income entry
   const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
-
   const chartData = sortedData.map((item) => ({
-    month: moment(item?.date).format("MMM YYYY"),
-    amount: item?.amount || 0,
-    source: item?.source,
+    name: item?.source || "Income",
+    amount: Number(item?.amount || 0),
+    date: moment(item?.date).format("DD MMM YYYY"),
   }));
   return chartData;
 };
