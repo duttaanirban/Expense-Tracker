@@ -50,6 +50,7 @@ Create a `.env` file in the `backend` folder with:
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 PORT=8000
+ALLOWED_ORIGIN=your_frontend_url
 ```
 
 ## Usage
