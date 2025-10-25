@@ -1,5 +1,5 @@
 // Allow overriding backend URL via Vite env var VITE_BASE_URL at build time
-export const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://expense-tracker-c01u.onrender.com';
+export const BASE_URL = 'https://expense-tracker-backend-kfq1.onrender.com';
 
 export const API_PATHS = {
     AUTH: {
