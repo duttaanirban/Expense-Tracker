@@ -14,9 +14,19 @@ const app = express();
 
 
 // Middleware
+// Configure CORS. Use ALLOWED_ORIGIN env (comma-separated) in production to whitelist frontend hosts.
+const allowedOrigins = (process.env.ALLOWED_ORIGIN || 'http://localhost:5173').split(',').map(s => s.trim());
+
 app.use(cors({
-    origin: "http://localhost:5173" || "*",
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps, curl, Postman)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf('*') !== -1 || allowedOrigins.indexOf(origin) !== -1) {
+            return callback(null, true);
+        }
+        return callback(new Error('CORS policy: Origin not allowed'));
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
